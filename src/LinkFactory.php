@@ -36,6 +36,7 @@ class LinkFactory extends Nette\Object
 	 *  - 'Presenter:action' - creates relative link
 	 *  - '//Presenter:action' - creates absolute link
 	 *  - 'Presenter:action#fragment' - may contain optional fragment
+	 *  - 'action' - creates relative link
 	 *
 	 * @param  string 'Presenter:action' (creates relative link) or '//Presenter:action' (creates absolute link)
 	 * @param  array
@@ -59,9 +60,14 @@ class LinkFactory extends Nette\Object
 		}
 
 		$pos = strrpos($destination, ':');
-		$presenter = substr($destination, 0, $pos);
-		if ($pos + 1 < strlen($destination)) {
-			$params['action'] = substr($destination, $pos + 1);
+		if ($pos !== FALSE) {
+			$presenter = substr($destination, 0, $pos);
+			if ($pos + 1 < strlen($destination)) {
+				$params['action'] = substr($destination, $pos + 1);
+			}
+		} else {
+			$params['action'] = $destination;
+			$presenter = $destination;
 		}
 
 		$request = new Nette\Application\Request($presenter, 'GET', $params);

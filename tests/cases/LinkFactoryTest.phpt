@@ -73,6 +73,11 @@ class LinkFactoryTest extends Tester\TestCase
 				'Foo', array(),
 				'/basepath/foo',
 			),
+			array(
+				'Foo', array(),
+				'Foo', array('action' => 'Foo'),
+				'/basepath/foo/foo',
+			),
 		);
 	}
 
